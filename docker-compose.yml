@@ -1,0 +1,13 @@
+mysql:
+  image: josh/kohadb:latest
+  command: mysqld_safe
+web:
+  image: josh/xgcc:latest
+  ports:
+    - "8088:80"
+    - "8089:8080"
+  links:
+    - mysql
+  cap_add:
+    - SYS_NICE
+    - DAC_READ_SEARCH
