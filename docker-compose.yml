@@ -7,7 +7,7 @@ services:
     restart: always
     volumes:
       - kohadb:/var/lib/mysql
-      - ./initdb:/docker-entrypoint-initdb.d
+      - ./library:/docker-entrypoint-initdb.d
     environment:
       MYSQL_ROOT_PASSWORD: secret
       MYSQL_DATABASE: koha_library
