@@ -1,28 +1,22 @@
 #! /bin/bash
 echo "entrypoint.sh"
 
-server=mysql
-name=library
-user=xgcc
-pass=secret
 username="$name-koha"
-configdump=./$name.tar.gz
-sqldump=./$name.sql.gz
+configdump=/library/$name.tar.gz
+sqldump=/library/.sql.gz
 database=koha_$name
 
 echo "Check server connection"
 
-
+echo "Waiting for server $server to become available"
 until mysql -u$user -h$server -p$pass -e ";" ; do
-    echo "Waiting for server $server to become available"
-    sleep 1
+    sleep 5
 done
 
 if ! grep $username /etc/passwd; then
 	echo "Create user $username"
 	adduser --no-create-home --disabled-login --gecos "Koha instance $username" \
     	--home "/var/lib/koha/$name" --quiet "$username"
-
 
 echo "Creating koha library directories"
 koha-create-dirs "$name"
